@@ -103,18 +103,44 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		return carList;
 	}
 	
-	/*@Override
-	public List<Order> update() throws SQLException {
+	@Override
+	public List<Order> delete(int deleteID) throws SQLException, RemoteException {
 		stat = con.createStatement();
 		
 		List<Order> carList = new ArrayList<Order>();
 		
-		//Read in primary key from user
-		//Insert to below query
+		String insertQuery = "DELETE FROM orders WHERE OrderID = " + deleteID + ";";
+				
+		stat.executeUpdate(insertQuery);
 		
-		String insertQuery = "select * from Orders ORDER BY OrderID";
+		String selectQuery = "select * from Orders ORDER BY OrderID";
+
+		ResultSet rs = stat.executeQuery(selectQuery);
 		
-		return null;	
-	}*/
+		while(rs.next()){
+			int OrderID = rs.getInt("OrderID");
+			String firstName = rs.getString("FirstName");
+			String lastName = rs.getString("LastName");
+			int CustomerID = rs.getInt("CustomerID");
+			String startDate = rs.getString("StartDate");
+			String endDate = rs.getString("EndDate");
+			String CarReg = rs.getString("CarReg");
+			
+			Order o = new Order();
+			
+			o.setOrderID(OrderID);
+			o.setFirstName(firstName);
+			o.setLastName(lastName);
+			o.setCustomerID(CustomerID);
+			o.setStartDate(startDate);
+			o.setEndDate(endDate);
+			o.setCarReg(CarReg);
+			
+			carList.add(o);
+			
+			
+		}
+		return carList;
+	}
 
 }
