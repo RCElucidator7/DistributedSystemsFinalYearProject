@@ -11,6 +11,10 @@ public interface DatabaseService extends Remote {
 	
 	public List<Order> read() throws RemoteException, SQLException;
 
-	public List<Order> write() throws SQLException, RemoteException;
+	public List<Order> write(String orderDetails) throws SQLException, RemoteException;
+
+	public List<Order> delete(String orderId) throws SQLException, RemoteException;
+
+	public List<Order> update(String orderId) throws SQLException, RemoteException;
 
 }

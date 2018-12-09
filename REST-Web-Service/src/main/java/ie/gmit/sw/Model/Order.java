@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlType;
     "customerID",
     "startDate",
     "endDate",
+    "carModel",
     "carReg"
 })
 @XmlRootElement(name = "order")
@@ -67,6 +68,8 @@ public class Order implements Serializable{
     protected String startDate;
     @XmlElement(name = "EndDate")
     protected String endDate;
+    @XmlElement(name = "CarModel")
+    protected String carModel;
     @XmlElement(name = "CarReg", required = true)
     protected String carReg;
 
@@ -121,6 +124,14 @@ public class Order implements Serializable{
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	
+	public String getCarModel(){
+		return carModel;
+	}
+	
+	public void setCarModel(String carModel){
+		this.carModel = carModel;
 	}
 
 	public String getCarReg() {

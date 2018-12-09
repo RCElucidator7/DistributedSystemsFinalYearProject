@@ -5,8 +5,13 @@
 		<complexType>
 			<sequence>
 				<element name="OrderID" type="int"></element>
+				<element name="FirstName" type="string"></element>
+				<element name="LastName" type="string"></element>
 				<element name="CustomerID" type="int"></element>
+				<element name="StartDate" type="string"></element>
+				<element name="EndDate" type="string"></element>
 				<element name="CarReg" type="string"></element>
+				<element name="CarModel" type="string"></element>
 			</sequence>
 		</complexType>
 	</element>
