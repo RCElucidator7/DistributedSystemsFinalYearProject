@@ -6,12 +6,12 @@ frameworks to develop a simple Car Hire Booking  System.
 
 We had four main requirements for this project:
 
-(1) A Simple Web Client
-(2) RESTful Web Service
-(3) Data Modelling
-(4) RMI Database Server
+* (1) A Simple Web Client
+* (2) RESTful Web Service
+* (3) Data Modelling
+* (4) RMI Database Server
 
-## HOW IT WORKS
+## How It Works
 
 The project contains 3 folders. One for the Tomcat Server, a java project for the RMI Database Server and a Maven/Jersey Project 
 for the RESTful Web Service.
