@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS Orders (
 INSERT INTO Orders (OrderID, FirstName, LastName, CustomerID, StartDate, EndDate, CarReg, CarModel)
 VALUES (1, "Barry", "Scott", 11, "23/05/18", "27/05/18", "02-G-123", "Tyota"), 
        (2, "Larry", "Lang", 21, "23/06/18", "26/06/18", "02-G-1234", "Ford"), 
-	   (3, "Barry", "Scott", 31, "09/07/18", "16/07/18", "02-G-1235", "Volvo");
+       (3, "Barry", "Scott", 31, "09/07/18", "16/07/18", "02-G-1235", "Volvo");
