@@ -1,5 +1,4 @@
-# DistributedSystemsFinalYearProject
-Distributed Systems Final Year Project
+# Distributed Systems Final Year Project
 
 For our Distributed Systems Final Year Project we were required to use the JAX-RS/Jersey, Java  RMI and  JAXB 
 frameworks to develop a simple Car Hire Booking  System. 
@@ -30,7 +29,12 @@ To run the project, first clone down this repo.
 
   git clone https://github.com/RCElucidator7/DistributedSystemsFinalYearProject.git
   
-Once the project has been clones, open up eclipse and use the cloned repo as the workspace.(NOTE: This project only work with Java Enterprise Edition, if you do not have this download from [here](https://www.eclipse.org/downloads/packages/)) Once you have that, you have to create the database. There are a number of ways to do this:
+Once the project has been clones, open up eclipse and use the cloned repo as the workspace.
+(NOTE: This project only work with Java Enterprise Edition, if you do not have this download from [here](https://www.eclipse.org/downloads/packages/)) Once you have that, you have to create the database. When working in a new workspace, you can use eclipse to import the projects by going into
+
+  File > Import > Existing Projects > "RMI", "REST", "Servers"
+  
+There are a number of ways to do this:
 
 ### Through phpMyAdmin:
   * Launch Wamp
