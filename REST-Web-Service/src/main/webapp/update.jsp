@@ -3,7 +3,7 @@
     <h2>Update an Order</h2>
     <form action="webapi/myresource/update" method="post">
     <p>Order ID : </p>
-    	<input type="number" name="OrderID"
+    	<input type="number" name="OrderID"/>
     	<br></br>
     <p>First Name :</p>
     	<input type="text" name="firstName"/>

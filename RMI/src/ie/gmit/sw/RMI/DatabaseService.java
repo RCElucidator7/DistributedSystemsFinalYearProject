@@ -7,6 +7,7 @@ import java.util.List;
 
 import ie.gmit.sw.Model.Order;
 
+//Service interface for the methods in the Implementor class
 public interface DatabaseService extends Remote {
 	
 	public List<Order> update(String orderDetails) throws RemoteException, SQLException;
@@ -16,5 +17,9 @@ public interface DatabaseService extends Remote {
 	public List<Order> delete(String deleteID) throws SQLException, RemoteException;
 
 	public List<Order> read() throws RemoteException, SQLException;
+
+	public List<Order> readCust(String id) throws RemoteException, SQLException;
+
+	public List<Order> readCustByID(String id) throws RemoteException, SQLException;
 
 }

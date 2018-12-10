@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.apache.catalina.connector.Request;
 
@@ -37,7 +38,8 @@ public class MyResource {
      * @throws MalformedURLException 
      * @throws SQLException 
      */
-		
+	
+	//All below @GET Request works with postman
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("/read")
@@ -49,6 +51,36 @@ public class MyResource {
         return ds.read();
     }
     
+    @SuppressWarnings("unchecked")
+	@GET
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("/read/{value}")
+    public List<Order> readCustomer(@PathParam("value") String value) throws MalformedURLException, RemoteException, Exception{
+    	
+    	if(value == "0"){
+    		String msg = "The order number " + value + " is not in the database!";
+    		return (List<Order>) Response.status(200).entity(msg).build();
+    	}
+    	
+    	DatabaseService ds;
+    	ds = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/database");
+    	
+ 		return ds.readCust(value);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("/readCust/{value}")
+    public List<Order> readByCustID(@PathParam("value") String value) throws MalformedURLException, RemoteException, Exception{
+    	
+    	DatabaseService ds;
+    	ds = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/database");
+    	
+ 		return ds.readCustByID(value);
+    }
+    
+    //Below Methods for creating, Deleting and updating were done using the @POST method as with my form submission in the .jsp HTML only supports GET and POST requests
+    //I am aware this is the incorrect way to do this but at the time I was unable to do it correctly.
     @POST
     @Produces(MediaType.APPLICATION_XML)
     @Path("/create")
@@ -72,6 +104,19 @@ public class MyResource {
         
     }
     
+    //Attempted to use @DELETE to work with postman but unable to complete
+    /*@DELETE
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("/delete")
+    public List<Order> deleteOrderPostman(String orderId) throws MalformedURLException, RemoteException, Exception{
+    	
+    	DatabaseService ds;
+    	ds = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/database");
+    	    	
+        return ds.delete(orderId);
+        
+    }*/
+    
     @POST
     @Produces(MediaType.APPLICATION_XML)
     @Path("/update")
@@ -83,5 +128,18 @@ public class MyResource {
         return ds.update(orderId);
         
     }
+    
+    //Attempted to use @PUT to work with postman but unable to complete
+    /*@PUT
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("/update")
+    public List<Order> updateOrderPostman(String orderId) throws MalformedURLException, RemoteException, Exception{
+    	
+    	DatabaseService ds;
+    	ds = (DatabaseService) Naming.lookup("rmi://127.0.0.1:1099/database");
+    	    	
+        return ds.update(orderId);
+        
+    }*/
     
 }

@@ -21,21 +21,25 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 	protected DatabaseServiceImpl() throws RemoteException, SQLException {
 		super();
+		//Gets the connection to the database
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/CARHIREDATA?useSSL=false", "root", "");
-		// TODO Auto-generated constructor stub
 	}
 
+	//Read method that returns a List of all the Orders in the database
 	@Override
 	public List<Order> read() throws RemoteException, SQLException {
-		// TODO Auto-generated method stub
+		//Creates a Statement object for sending SQL statements to the database
 		stat = con.createStatement();
 		
 		List<Order> carList = new ArrayList<Order>();
 		
+		//Assign the query to a string
 		String selectQuery = "select * from Orders ORDER BY OrderID";
 		
+		//Execute using the string from above
 		ResultSet rs = stat.executeQuery(selectQuery);
 		
+		//Search through the result set and get each value in the database
 		while(rs.next()){
 			int OrderID = rs.getInt("OrderID");
 			String firstName = rs.getString("FirstName");
@@ -48,6 +52,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 			
 			Order o = new Order();
 			
+			//Set the read in values to the Order object and add it to the List of object we return
 			o.setOrderID(OrderID);
 			o.setFirstName(firstName);
 			o.setLastName(lastName);
@@ -64,8 +69,94 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		return carList;
 	}
 	
+	//Reads in information only viewable by the customer so long as they have their Customer ID
+	@Override
+	public List<Order> readCustByID(String id) throws RemoteException, SQLException {
+		//Creates a Statement object for sending SQL statements to the database
+		stat = con.createStatement();
+				
+		List<Order> carList = new ArrayList<Order>();
+		
+		//Assign the query to a String
+		String selectQuery = "select * from Orders WHERE CustomerID = '" + id + "';";
+		
+		//Execute the query with the above string
+		ResultSet rs = stat.executeQuery(selectQuery);
+				
+		//Search through the result set and get each value in the database
+		if(rs.next()){
+			int OrderID = rs.getInt("OrderID");
+			String firstName = rs.getString("FirstName");
+			String lastName = rs.getString("LastName");
+			int CustomerID = rs.getInt("CustomerID");
+			String CarModel = rs.getString("CarModel");
+			
+			Order o = new Order();
+			
+			//Set the read in values to the Order object and add it to the List of object we return
+			o.setOrderID(OrderID);
+			o.setFirstName(firstName);
+			o.setLastName(lastName);
+			o.setCustomerID(CustomerID);
+			o.setCarModel(CarModel);
+			
+			carList.add(o);
+		}
+			
+			
+		return carList;
+	}
+	
+	//Reads in all information on a certain customer using the Order ID
+	@Override
+	public List<Order> readCust(String id) throws RemoteException, SQLException {
+		//Creates a Statement object for sending SQL statements to the database
+		stat = con.createStatement();
+		
+		System.out.println(id);
+		
+		List<Order> carList = new ArrayList<Order>();
+		
+		String selectQuery = "select * from Orders WHERE OrderID = '" + id + "';";
+		
+		System.out.println(selectQuery);
+		
+		ResultSet rs = stat.executeQuery(selectQuery);
+				
+		//Search through the result set and get each value in the database
+		if(rs.next()){
+			int OrderID = rs.getInt("OrderID");
+			String firstName = rs.getString("FirstName");
+			String lastName = rs.getString("LastName");
+			int CustomerID = rs.getInt("CustomerID");
+			String startDate = rs.getString("StartDate");
+			String endDate = rs.getString("EndDate");
+			String CarReg = rs.getString("CarReg");
+			String CarModel = rs.getString("CarModel");
+			
+			Order o = new Order();
+			
+			//Set the read in values to the Order object and add it to the List of object we return
+			o.setOrderID(OrderID);
+			o.setFirstName(firstName);
+			o.setLastName(lastName);
+			o.setCustomerID(CustomerID);
+			o.setStartDate(startDate);
+			o.setEndDate(endDate);
+			o.setCarReg(CarReg);
+			o.setCarModel(CarModel);
+			
+			carList.add(o);
+		}
+			
+			
+		return carList;
+	}
+	
+	//Method that takes in the users values and writes them to the database
 	@Override
 	public List<Order> write(String orderDetails) throws RemoteException, SQLException {
+		//Creates a Statement object for sending SQL statements to the database
 		stat = con.createStatement();
 		
 		List<Order> carList = new ArrayList<Order>();
@@ -84,15 +175,19 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		//Add the closing ' to the end of the query
 		orderDetails = orderDetails + "'";
 				
+		//Add the query to a string to get ready to execute
 		String insertQuery = "INSERT INTO Orders (OrderID, FirstName, LastName, CustomerID, StartDate, EndDate, CarReg, CarModel) VALUES " + 
 		"(NULL, '" + orderDetails + ");";
 		
+		//Execute the query
 		stat.executeUpdate(insertQuery);
 		
+		//Use the Select query to return the list of data to the user after adding
 		String selectQuery = "select * from Orders ORDER BY OrderID";
 		
 		ResultSet rs = stat.executeQuery(selectQuery);
 		
+		//Search through the result set and get each value in the database
 		while(rs.next()){
 			int OrderID = rs.getInt("OrderID");
 			String firstName = rs.getString("FirstName");
@@ -105,6 +200,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 			
 			Order o = new Order();
 			
+			//Set the read in values to the Order object and add it to the List of object we return
 			o.setOrderID(OrderID);
 			o.setFirstName(firstName);
 			o.setLastName(lastName);
@@ -123,18 +219,22 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 	
 	@Override
 	public List<Order> delete(String deleteID) throws SQLException, RemoteException {
+		//Creates a Statement object for sending SQL statements to the database
 		stat = con.createStatement();
 		
 		List<Order> carList = new ArrayList<Order>();
 		
+		//Add the query to a string using the orderID passed in by the user
 		String insertQuery = "DELETE FROM orders WHERE " + deleteID + ";";
 				
+		//Execute the statement
 		stat.executeUpdate(insertQuery);
 		
 		String selectQuery = "select * from Orders ORDER BY OrderID";
 
 		ResultSet rs = stat.executeQuery(selectQuery);
 		
+		//Search through the result set and get each value in the database
 		while(rs.next()){
 			int OrderID = rs.getInt("OrderID");
 			String firstName = rs.getString("FirstName");
@@ -147,6 +247,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 			
 			Order o = new Order();
 			
+			//Set the read in values to the Order object and add it to the List of object we return
 			o.setOrderID(OrderID);
 			o.setFirstName(firstName);
 			o.setLastName(lastName);
@@ -165,6 +266,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 
 	@Override
 	public List<Order> update(String orderDetails) throws RemoteException, SQLException {
+		//Creates a Statement object for sending SQL statements to the database
 		stat = con.createStatement();
 
 		List<Order> carList = new ArrayList<Order>();
@@ -202,17 +304,14 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		orderDetails = orderDetails.replace("carReg='',", "");
 		orderDetails = orderDetails.replace("carModel=''", "");
 		
+		//Replace all the blank spaces so the If can check the end of the string
+		orderDetails = orderDetails.replaceAll(" ", "");
 		//Check if the string ends with a comma (it will only do so if 1 field is updates)
-		if(orderDetails.endsWith(", ")){
-			//If it does replace all the blank spaces and remove the last character in the string
-			orderDetails = orderDetails.replaceAll(" ", "");
+		if(orderDetails.endsWith(",")){
+			//If it does remove the last character in the string
 			orderDetails = orderDetails.substring(0, orderDetails.length()-1);
 		}
-		
-
-		
-		System.out.println(orderDetails);
-				
+						
 		String insertQuery = "UPDATE Orders SET " + orderDetails + " WHERE " + orderID + ";";
 		
 		stat.executeUpdate(insertQuery);
@@ -221,6 +320,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		
 		ResultSet rs = stat.executeQuery(selectQuery);
 		
+		//Search through the result set and get each value in the database
 		while(rs.next()){
 			int OrderID = rs.getInt("OrderID");
 			String firstName = rs.getString("FirstName");
@@ -233,6 +333,7 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 			
 			Order o = new Order();
 			
+			//Set the read in values to the Order object and add it to the List of object we return
 			o.setOrderID(OrderID);
 			o.setFirstName(firstName);
 			o.setLastName(lastName);

@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
+
+//Order Class for the orders table in the Database
+//I was having trouble creating more than one database so I went with one that stored all the needed data
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "orderID",
