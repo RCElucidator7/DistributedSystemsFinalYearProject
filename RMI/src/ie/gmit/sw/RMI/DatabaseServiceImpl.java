@@ -173,9 +173,11 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		//Split the String into an Array to get the OrderID value at the first index
 		String inputArray[] = orderDetails.split("&");
 		
+		System.out.println(orderDetails);
+		
 		//Assign to a variable, looks cleaner than plugging the Array into the SQL query
 		orderID = inputArray[0];
-		
+				
 		//Replace the & with a comma and a space for the update query
 		orderDetails = orderDetails.replace("&", "', ");
 		//Replace the orderID at the start of the string as its not needed in the update query
@@ -186,19 +188,30 @@ public class DatabaseServiceImpl extends UnicastRemoteObject implements Database
 		orderDetails = orderDetails.replace("startDate=", "startDate='");
 		orderDetails = orderDetails.replace("endDate=", "endDate='");
 		orderDetails = orderDetails.replace("carReg=", "carReg='");
-		orderDetails = orderDetails.replace("carModel=", "carReg='");
+		orderDetails = orderDetails.replace("carModel=", "carModel='");
 		
 		//Add a ' for closing the carReg value
 		orderDetails = orderDetails + "'";
 		
 		//If any of the values are null, replace them with an empty space
-		orderDetails = orderDetails.replace("firstName=''", "");
-		orderDetails = orderDetails.replace("lastName=''", "");
-		orderDetails = orderDetails.replace("customerId=''", "");
-		orderDetails = orderDetails.replace("startDate=''", "");
-		orderDetails = orderDetails.replace("endDate=''", "");
-		orderDetails = orderDetails.replace("carReg=''", "");
+		orderDetails = orderDetails.replace("firstName='',", "");
+		orderDetails = orderDetails.replace("lastName='',", "");
+		orderDetails = orderDetails.replace("customerId='',", "");
+		orderDetails = orderDetails.replace("startDate='',", "");
+		orderDetails = orderDetails.replace("endDate='',", "");
+		orderDetails = orderDetails.replace("carReg='',", "");
 		orderDetails = orderDetails.replace("carModel=''", "");
+		
+		//Check if the string ends with a comma (it will only do so if 1 field is updates)
+		if(orderDetails.endsWith(", ")){
+			//If it does replace all the blank spaces and remove the last character in the string
+			orderDetails = orderDetails.replaceAll(" ", "");
+			orderDetails = orderDetails.substring(0, orderDetails.length()-1);
+		}
+		
+
+		
+		System.out.println(orderDetails);
 				
 		String insertQuery = "UPDATE Orders SET " + orderDetails + " WHERE " + orderID + ";";
 		

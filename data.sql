@@ -22,3 +22,30 @@ VALUES (1, "Barry", "Scott", 11, "23/05/18", "27/05/18", "02-G-123", "Tyota"),
 	   (3, "Barry", "Scott", 31, "09/07/18", "16/07/18", "02-G-1235", "Volvo");
 	   
 SELECT * FROM Orders;
+
+CREATE TABLE IF NOT EXISTS Orders(
+    OrderID int NOT NULL AUTO_INCREMENT,
+	FirstName varchar(255) Not null,
+	LastName varchar(255) not null,
+	CustomerID int Not Null,
+	PRIMARY KEY (OrderID)
+);
+
+CREATE TABLE Bookings(
+    OrderID int NOT NULL AUTO_INCREMENT,
+    StartDate varchar(255) not null,
+	EndDate varchar(255) not null,
+	CarReg varchar(255) Not Null,
+	CarModel varchar(255) Not Null,
+	PRIMARY KEY (OrderID)
+);
+
+INSERT INTO Orders (OrderID, FirstName, LastName, CustomerID)
+VALUES (1, "Barry", "Scott", 11),
+		(2, "Larry", "Lang", 21),
+		(3, "Barry", "Scott", 31);
+		
+INSERT INTO Orders (OrderID, FirstName, LastName, CustomerID)
+VALUES (1, "23/05/18", "27/05/18", "02-G-123", "Tyota")
+		(2, "23/06/18", "26/06/18", "02-G-1234", "Ford"), 
+		(3, "09/07/18", "16/07/18", "02-G-1235", "Volvo");
