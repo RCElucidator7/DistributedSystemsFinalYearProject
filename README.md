@@ -74,3 +74,22 @@ The manager menu contains 4 options for the user:
   * Delete Booking - brings the user to a form where they enter the orderID and submit. The submit button sends a request that removes that order from the database and returns the updated list of users in the database. (This was done using a @POST request as the HTML form submission only allows GET and POST requests. I realise this is incorrect but it was all I could do at the time)
   * Update Booking - brings the user to a form where they can fill in and update and specific values they may want to update. If the user wants to update only one or more values they can leave the inputs empty. The submit button sends a request to the RMI where it breaks apart the input data and formats it into an update query which updates the user with the inputed details.(Again, this was done using a @POST method as the HTML form submission only allows GET and POST requests).
   
+### Postman
+Below is a link to my postman collection for requests used in this project.
+
+  https://www.getpostman.com/collections/763fb4872f991f69e62f
+  
+The above collection only contains 3 GET requests as I was unable to get the POST PUT and DELETE requests working.
+
+### Extra Bits
+Below are some extra features I attempted to implement: 
+  * Customer/Manager Login - Implemented a menu for both customers and managers. Was unable to lock the manager menu behind a login.
+  * Generated war and jar - Generated a WAR for the jersey project and a jar for the RMI Server. Both files are store in their respective project folders.
+  * Alternate GET requests - As stated above I've implemented a customer menu and a manager menu where they can send more than one type of GET request. All GET requests also stored in the postman collection.
+  
+### Issues that arose
+* DELETE and PUT requests not implemented correctly - Due to the html form submission only supporting GET and POST requests, I had to use POST requests for my updates and deletes as mentioned above. I am aware this is done incorrectly but I could not think of an alternative solution to pass data into the requests without manually altering the URL, which I thought would be bothersome in a GUI enviroment.
+* XML Responses - All requests, once executed, displays all the users in the database in XML format. I was unsure whether to leave this in or not as in the labs we displays all our requests in XML so I thought this may be how I was required how to display this info? I could have sought of a way to change XML into HTML/Plain text format but decided against it as I thought this would be prefered.
+* Only One database - Once I started the project I initally implemented it to have one database and worked from there, so when I attempted to implement more at a later date I ran into trouble so I was unable to complete this requirement of the project.
+
+#### Designed by: Ryan Conway
